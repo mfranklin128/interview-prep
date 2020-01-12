@@ -5,6 +5,10 @@ class Stack:
         self.top = None
         self.count = 0
         
+    def push_list(self, l):
+        for data in l:
+            self.push(data)
+
     def push(self, data):
         self.count += 1
         if not self.top:
