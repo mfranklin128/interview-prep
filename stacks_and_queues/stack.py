@@ -3,8 +3,10 @@ import node
 class Stack:
     def __init__(self):
         self.top = None
+        self.count = 0
         
     def push(self, data):
+        self.count += 1
         if not self.top:
             self.top = node.Node(data)
         else:
@@ -15,6 +17,7 @@ class Stack:
     def pop(self):
         if not self.top:
             return None
+        self.count -= 1
         data = self.top.data
         self.top = self.top.next
         return data
@@ -23,3 +26,6 @@ class Stack:
         if self.top:
             return self.top.data
         return None
+        
+    def __len__(self):
+        return self.count
