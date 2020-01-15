@@ -13,26 +13,42 @@ def make_testdata():
     root.right.right.right = binary_tree.Node(11)
     return root
     
-def is_bst_helper(root):
-    if not root.left and not root.right:
-        return root.data
-    left_max = None
-    right_max = None
-    if root.left:
-        left_max = is_bst_helper(root.left)
-        if left_max == None or left_max > root.data:
-            return None
-    if root.right:
-        right_max = is_bst_helper(root.right)
-        if right_max == None or right_max < root.data:
-            return None
-    if right_max:
-        return right_max
-    return root.data
-        
+def is_bst_helper(root, min, max):
+    if root == None:
+        # Base case.
+        return True
+    if root.left == None and root.right == None:
+        # No children, inherently a BST.
+        return (
+            (min == None or root.data >= min) and
+            (max == None or root.data < max)
+            )
+    if min == None and max == None:
+        # Top of the tree.
+        return (
+            is_bst_helper(root.left, None, root.data) and
+            is_bst_helper(root.right, root.data, None)
+        )
+    elif min == None:
+        return (
+            root.data < max and
+            is_bst_helper(root.left, None, root.data) and
+            is_bst_helper(root.right, root.data, max)
+        )
+    elif max == None:
+        return (
+            root.data >= min and
+            is_bst_helper(root.left, min, root.data) and
+            is_bst_helper(root.right, root.data, None)
+        )
+    return (
+        root.data >= min and root.data < max and
+        is_bst_helper(root.left, min, root.data) and
+        is_bst_helper(root.right, root.data, max)
+        )
     
 def is_bst(root):
-    return is_bst_helper(root) != None
+    return is_bst_helper(root, None, None)
 
 root = make_testdata()
 print(is_bst(root))
