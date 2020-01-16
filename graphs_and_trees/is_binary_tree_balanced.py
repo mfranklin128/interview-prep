@@ -17,8 +17,6 @@ def construct_test_data():
     return root
     
     
-import sys
-
 def balanced_depth(root):
     if not root:
         return 0
@@ -26,12 +24,9 @@ def balanced_depth(root):
     left_depth = balanced_depth(root.left)
     right_depth = balanced_depth(root.right)
     if abs(left_depth - right_depth) > 1:
-        print('diff > 1')
         return -1
     if left_depth == -1 and right_depth == -1:
-        print('both unbalanced')
         return -1
-    print('depth = %d' % (max(left_depth, right_depth) + 1))
     return max(left_depth, right_depth) + 1
 
 def is_balanced(root):
